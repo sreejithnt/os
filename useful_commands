@@ -1,0 +1,39 @@
+dd if=/dev/zero of=disk.img bs=512 count=2880
+
+nasm -f bin bl_kernel.asm -o bl_kernel.bin
+dd conv=notrunc if=os_image.bin of=disk.img bs=512
+
+dd conv=notrunc if=bl_print_function.bin of=disk.img
+
+Assembly nasm commands
+======================
+
+To create object file in ELF format
+------------------------------------
+nasm kernel_entry.asm -f elf -o kernel_entry.o
+
+
+Linker Commands
+================
+ld -o kernel.bin -Ttext 0x1000 kernel_entry.o kernel.o --oformat binary
+
+C compile, link and dis-assemble commands
+=========================================
+
+Compile
+---------
+gcc -fno-pie -m32 -ffreestanding -c kernel_new.c -o kernel.o
+gcc -fno-pie -m32 -ffreestanding -c kernel.c -o kernel.o
+
+Link
+------
+ld -o basic.bin -Ttext 0x0 --oformat binary basic.o
+ld -m elf_i386 -o kernel.bin -Ttext 0x1000 kernel_entry.o kernel.o --oformat binary
+
+Dis-assemble
+-------------
+ndisasm -b 32 basic.bin > basic.dis
+
+cat bl_kernel.bin kernel.bin > os_image.bin
+
+
