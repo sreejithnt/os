@@ -4,7 +4,7 @@
 // a useful default function
 // that rights to start of the screen
 void print(char* s){
-	print_str_at(s, -1, -1)
+	print_str_at(s, -1, -1);
 }
 
 
@@ -16,7 +16,7 @@ void print_str_at(char* s, int col, int row){
 	} 
 	int i = 0;
 	while(s[i] != 0){
-		print_char(s[i++], col, row, WHITE_ON_BLACK)
+		print_char(s[i++], col, row, WHITE_ON_BLACK);
 	}
 }
 
@@ -58,13 +58,13 @@ void print_char(char c, int col, int row, char attr_byte){
 	}
 
 	// update offset to next cell, that is two bytes away
-	offset += 2
+	offset += 2;
 
 	//handle scrolling, if the viewport is at the last row
 	//offset = handle_scrolling(offset)
 
 	// update the VGA cursor position using the port registers
-	set_cursor(offset)
+	set_cursor(offset);
 }
 
 int get_screen_offset(int row, int col){
@@ -72,20 +72,20 @@ int get_screen_offset(int row, int col){
 	// each row contains MAX_COLS cells
 	// finally it is multiplied by 2 since each is 
 	// 2 bytes
-	return (row * MAX_COLS + col) * 2
+	return (row * MAX_COLS + col) * 2;
 }
 
 int set_cursor(int offset){
 	// to get the position, devide by 2
 	// as original offset is position * 2 (since one position is two bytes)
-	offset = offset/2
+	offset = offset/2;
 
 	port_byte_out(REG_SCREEN_CTRL, 14);
-	// get the high bytes of offset
-	port_byte_in(REG_SCREEN_DATA, (offset >> 8))
+	// set the high bytes of offset
+	port_byte_out(REG_SCREEN_DATA, (offset >> 8));
 	port_byte_out(REG_SCREEN_CTRL, 15);
-	// get the low bytes of the offset
-	port_byte_in(REG_SCREEN_DATA, (offset & 0xff))
+	// set the low bytes of the offset
+	port_byte_out(REG_SCREEN_DATA, (offset & 0xff));
 }
 
 int get_cursor_offset(){
@@ -112,7 +112,7 @@ int get_cursor_offset(){
 	offset += port_byte_in(REG_SCREEN_DATA);
 
 
-	return offset * 2
+	return offset * 2;
 
 }
 

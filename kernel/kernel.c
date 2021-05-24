@@ -1,4 +1,4 @@
 #include "../drivers/screen.h"
 void main(){
-	print("Hello World from C!")
+	print("Hello World from C!");
 }

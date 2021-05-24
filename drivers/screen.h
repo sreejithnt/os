@@ -10,5 +10,5 @@
 #define REG_SCREEN_DATA 0x3D5
 
 /* publicly exposed functions */
-void print(char *s)
-void print_at(char *s, int col, int row)
+void print(char *s);
+void print_at(char *s, int col, int row);

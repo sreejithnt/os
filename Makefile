@@ -1,14 +1,14 @@
 # Automatically generate lists of sources using wildcards .
-C_SOURCES = $( wildcard kernel/*.c drivers/*.c)
-HEADERS = $( wildcard kernel/*.h drivers/*.h )
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c)
+HEADERS = $(wildcard kernel/*.h drivers/*.h )
 
 # Convert the *.c filenames to *.o to give a list of object files to build
-OBJ = ${C_SOURCES .c =.o}
+OBJ = ${C_SOURCES:.c=.o}
 
 all: disk.img
 
 # This is the actual disk image that the computer loads
-disk.img: os_image.bin
+disk.img: os_image.bin create_disk
 	dd conv=notrunc if=os_image.bin of=disk.img bs=512
 
 # This is the actual binary
