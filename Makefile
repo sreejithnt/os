@@ -45,6 +45,8 @@ kernel.bin: kernel/kernel_entry.o ${OBJ}
 %.bin: %.asm
 	nasm $< -f bin -o $@
 
+# this is needed to actually create floppy disk image
+# This image will be used as the boot disk for VM
 create_disk: boot/bl_kernel.asm
 	dd if=/dev/zero of=disk.img bs=512 count=2880
 
